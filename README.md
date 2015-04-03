@@ -84,6 +84,12 @@ end
 Inc.new mod: 42
 ```
 
+## See also
+
+* https://github.com/mbj/concord
+* https://github.com/ahoward/fattr
+* https://github.com/solnic/virtus
+
 ## Installation
 
 Add this line to your application's Gemfile:
