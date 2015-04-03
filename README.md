@@ -7,8 +7,10 @@ class FooBar
   kwattr :foo, :bar
 end
 
-FooBar.new foo: 42, bar: 21
+foobar = FooBar.new foo: 42, bar: 21
 # => #<FooBar @foo=42, @bar=21>
+foobar.foo # => 42
+foobar.bar # => 21
 ```
 
 instead of
