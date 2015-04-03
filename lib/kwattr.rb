@@ -3,12 +3,14 @@ require "kwattr/version"
 module KWAttr
 
   def kwattr(*attrs, **opts)
-    attr_reader(*attrs, *opts.keys)
+    names = [*attrs, *opts.keys]
+    attr_reader(*names)
     prepend Initializer
     extend Heritable
     required, defaults = kwattrs
     attrs.each { |attr| required << attr unless required.include?(attr) }
     defaults.merge!(opts)
+    names
   end
 
   def kwattrs

@@ -21,6 +21,24 @@ fail unless raises?(ArgumentError) { Test.new }
 fail unless raises?(ArgumentError) { Test.new(foo: 42) }
 fail unless raises?(ArgumentError) { Test.new(foo: 42, bar: 21, baz: 43) }
 
+class Discrete
+  protected *kwattr(:foo, bar: 21)
+
+  def pfoo
+    foo
+  end
+
+  def pbar
+    bar
+  end
+end
+
+test = Discrete.new(foo: 42)
+fail unless p(test.pfoo) == 42
+fail unless p(test.pbar) == 21
+fail unless raises?(NoMethodError) { test.foo }
+fail unless raises?(NoMethodError) { test.bar }
+
 class Test2
   kwattr :titi
   kwattr :toto
