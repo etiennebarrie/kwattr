@@ -43,19 +43,19 @@ The default initialize is prepended so there's no need to call `super` in
 initialize, and attributes are already set.
 
 ```ruby
-$over = []
+$overridden = []
 
-class Over
+class Overridden
   kwattr foo: 42
 
   def initialize
-    $over << foo
+    $overridden << foo
   end
 end
 
-Over.new
-Over.new foo: 21
-$over
+Overridden.new
+Overridden.new foo: 21
+$overridden
 # => [42, 21]
 ```
 
