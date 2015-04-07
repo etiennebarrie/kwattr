@@ -1,14 +1,13 @@
 # KWattr
 
-Keyword arguments meet attribute definitions and initialize:
+Keyword arguments meet `attr_reader` and `initialize`:
 
 ```ruby
 class FooBar
-  kwattr :foo, :bar
+  kwattr :foo, bar: 21
 end
 
-foobar = FooBar.new foo: 42, bar: 21
-# => #<FooBar @foo=42, @bar=21>
+foobar = FooBar.new(foo: 42) # => #<FooBar @foo=42, @bar=21>
 foobar.foo # => 42
 foobar.bar # => 21
 ```
@@ -19,58 +18,53 @@ instead of
 class FooBar
   attr_reader :foo, :bar
 
-  def initialize(foo:, bar:)
+  def initialize(foo:, bar: 21)
     @foo = foo
     @bar = bar
   end
 end
 ```
 
-### Default values
+### initialize
+
+The provided `initialize` is prepended so there's no need to call `super`, and
+attributes are already set when your code is reached.
 
 ```ruby
-class Foo
-  kwattr foo: 42
-end
-
-Foo.new
-# => #<Foo @foo=42>
-```
-
-### Overriding initialize
-
-The default initialize is prepended so there's no need to call `super` in
-initialize, and attributes are already set.
-
-```ruby
-$overridden = []
-
-class Overridden
+class BarInitialize
   kwattr foo: 42
 
-  def initialize
-    $overridden << foo
+  def initialize(bar: 2)
+    @bar = foo / bar
   end
 end
-
-Overridden.new
-Overridden.new foo: 21
-$overridden
-# => [42, 21]
+BarInitialize.new # => #<BarInitialize @foo=42, @bar=21>
 ```
 
-### Subclass
+### return value
+
+It returns the list of keyword attributes so you can combine with methods like
+`Module#protected`.
+
+```ruby
+class FooProtected
+  protected *kwattr(foo: 42)
+end
+FooProtected.new # => #<FooProtected @foo=42>
+FooProtected.protected_instance_methods # => [:foo]
+```
+
+### subclass
 
 ```ruby
 class Bar < Foo
   kwattr :bar
 end
 
-Bar.new bar: 42
-# => #<Bar @foo=42, @bar=42>
+Bar.new(bar: 42) # => #<Bar @foo=42, @bar=42>
 ```
 
-### Include
+### include
 
 ```ruby
 module Mod
@@ -81,7 +75,7 @@ class Inc
   include Mod
 end
 
-Inc.new mod: 42
+Inc.new(mod: 42)
 ```
 
 ## See also
