@@ -50,8 +50,9 @@ module KWAttr
 
 end
 
-public def kwattr(*args)
-  raise TypeError, "wrong type #{self.class} (expected Module)" unless Module === self
-  extend KWAttr
-  kwattr(*args)
+class Module
+  def kwattr(*args)
+    extend KWAttr
+    kwattr(*args)
+  end
 end

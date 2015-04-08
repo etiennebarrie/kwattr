@@ -15,8 +15,6 @@ rescue exception_class
   return p $!
 end
 
-fail unless raises?(TypeError) { kwattr }
-
 fail unless raises?(ArgumentError) { Test.new }
 fail unless raises?(ArgumentError) { Test.new(foo: 42) }
 fail unless raises?(ArgumentError) { Test.new(foo: 42, bar: 21, baz: 43) }
