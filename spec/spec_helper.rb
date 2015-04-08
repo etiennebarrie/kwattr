@@ -16,7 +16,7 @@ end
 module RaiseArgumentErrorHelper
   def it_raises_on_unknown_keyword(keyword, &block)
     it 'raises ArgumentError on unknown keyword' do
-      expect(&block).to raise_error(ArgumentError)#, "unknown keyword: #{keyword}")
+      expect(&block).to raise_error(ArgumentError, "unknown keyword: #{keyword}")
     end
   end
 
@@ -24,7 +24,7 @@ module RaiseArgumentErrorHelper
     description = 'raises ArgumentError on missing keyword'
     description << " #{message}" if message
     example description do
-      expect(&block).to raise_error(ArgumentError)#, "missing keyword: #{keyword}")
+      expect(&block).to raise_error(ArgumentError, "missing keyword: #{keyword}")
     end
   end
 
@@ -33,13 +33,13 @@ module RaiseArgumentErrorHelper
     description = 'raises ArgumentError on missing keywords'
     description << " #{message}" if message
     example description, metadata do
-      expect(&block).to raise_error(ArgumentError)#, "missing keywords: #{keywords.join(', ')}")
+      expect(&block).to raise_error(ArgumentError, "missing keywords: #{keywords.join(', ')}")
     end
   end
 
   def it_raises_on_missing_positional_argument(&block)
     it 'raises ArgumentError on missing positional parameter' do
-      expect(&block).to raise_error(ArgumentError)#, a_string_starting_with('wrong number of arguments'))
+      expect(&block).to raise_error(ArgumentError, a_string_starting_with('wrong number of arguments'))
     end
   end
 end

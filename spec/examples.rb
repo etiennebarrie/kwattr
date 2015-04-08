@@ -22,6 +22,15 @@ class OneAttrOneKeyword
   end
 end
 
+class OneAttrOnePositional
+  kwattr :foo
+  attr_reader :bar
+
+  def initialize(bar)
+    @bar = bar
+  end
+end
+
 class TwoAttrs
   kwattr :foo, :bar
 end
@@ -42,15 +51,6 @@ class TwoAttrsOneDefault
   DEFAULT_BAR = 21
 
   kwattr :foo, bar: DEFAULT_BAR
-end
-
-class TwoAttrsOneKeyword
-  kwattr :foo, :bar
-  attr_reader :baz
-
-  def initialize(baz:)
-    @baz = baz
-  end
 end
 
 class TwoAttrsOnePos
