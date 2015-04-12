@@ -6,6 +6,8 @@ RSpec.describe KWattr do
     expect(KWattr::VERSION).not_to be nil
   end
 
+  # ZERO
+
   shared_examples 'a class with nothing to initialize' do
     it 'can be initialized' do
       described_class.new
@@ -39,6 +41,8 @@ RSpec.describe KWattr do
     end
   end
 
+  # ONE
+
   shared_examples 'a class with one attribute' do
     example 'attribute is initialized' do
       instance = described_class.new(foo: 42)
@@ -65,7 +69,12 @@ RSpec.describe KWattr do
     include_examples 'a class with one kwattr to initialize'
   end
 
-  describe OneAttrTwice, 'a class with one kwattr' do
+  describe OneAttrTwice, 'a class with one kwattr defined twice' do
+    include_examples 'a class with one attribute'
+    include_examples 'a class with one kwattr to initialize'
+  end
+
+  describe OneAttrTwiceTwoLines, 'a class with one kwattr defined twice on two lines' do
     include_examples 'a class with one attribute'
     include_examples 'a class with one kwattr to initialize'
   end
@@ -95,6 +104,11 @@ RSpec.describe KWattr do
     end
   end
 
+  describe OneAttrViaModule, 'a class with one kwattr defined via a module' do
+    include_examples 'a class with one attribute'
+    include_examples 'a class with one kwattr to initialize'
+  end
+
   describe OneAttrOnePositional, 'a class with one kwattr, one argument on initialize' do
     example 'attributes are initialized' do
       instance = described_class.new(21, foo: 42)
@@ -114,6 +128,8 @@ RSpec.describe KWattr do
       described_class.new(21, {})
     end
   end
+
+  # TWO
 
   shared_examples 'a class with two kwattrs to initialize' do
     example 'attributes are initialized' do
@@ -163,6 +179,8 @@ RSpec.describe KWattr do
     include_examples 'a class with two kwattrs to initialize'
     include_examples 'combined errors for two keywords'
   end
+
+  # THREE
 
   describe TwoAttrsOnePos, 'a class with two kwattrs and one positional parameter' do
     example 'attributes are initialized' do

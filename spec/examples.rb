@@ -3,6 +3,10 @@ class OneAttr
 end
 
 class OneAttrTwice
+  kwattr :foo, :foo
+end
+
+class OneAttrTwiceTwoLines
   kwattr :foo
   kwattr :foo
 end
@@ -82,4 +86,12 @@ end
 
 class OneAttrMistakenlyRedefinesIt < OneAttr
   kwattr :foo
+end
+
+module OneAttrModule
+  kwattr :foo
+end
+
+class OneAttrViaModule
+  include OneAttrModule
 end
