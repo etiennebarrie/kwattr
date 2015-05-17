@@ -210,4 +210,25 @@ RSpec.describe KWattr do
       described_class.new
     end
   end
+
+  describe OneAttrUsedInInitialize, 'a class with one kwattr used in initialize' do
+    example '#initialize is called with attributes initialized' do
+      instance = described_class.new(foo: 42)
+      expect(instance.half_foo).to eq 21
+    end
+  end
+
+  describe OneAttrInheritsUseInInitialize, 'a class that inherits one kwattr and use it in initialize' do
+    example '#initialize is called with attributes initialized' do
+      instance = described_class.new(foo: 42)
+      expect(instance.half_foo).to eq 21
+    end
+  end
+
+  describe TwoAttrsInheritsOneAttrUsedInInitialize, 'a class that inherits one kwattr, defines one and use both in initialize' do
+    example '#initialize is called with attributes initialized' do
+      instance = described_class.new(foo: 42, bar: 21)
+      expect(instance.foo_times_bar).to eq 42 * 21
+    end
+  end
 end

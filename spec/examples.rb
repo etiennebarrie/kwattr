@@ -95,3 +95,31 @@ end
 class OneAttrViaModule
   include OneAttrModule
 end
+
+class OneAttrUsedInInitialize
+  kwattr :foo
+  attr_reader :half_foo
+
+  def initialize
+    @half_foo = foo / 2
+  end
+end
+
+class OneAttrInheritsUseInInitialize < OneAttr
+  attr_reader :half_foo
+
+  def initialize(**)
+    super
+    @half_foo = foo / 2
+  end
+end
+
+class TwoAttrsInheritsOneAttrUsedInInitialize < OneAttr
+  kwattr :bar
+  attr_reader :foo_times_bar
+
+  def initialize(**)
+    super
+    @foo_times_bar = foo * bar
+  end
+end

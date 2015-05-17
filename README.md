@@ -57,11 +57,45 @@ FooProtected.protected_instance_methods # => [:foo]
 ### subclass
 
 ```ruby
-class Bar < Foo
+class Foo
+  kwattr :foo
+end
+
+class FooWithBar < Foo
   kwattr :bar
 end
 
-Bar.new(bar: 42) # => #<Bar @foo=42, @bar=42>
+FooWithBar.new(foo: 42, bar: 21) # => #<FooWithBar @foo=42, @bar=21>
+```
+
+#### limitations with subclasses
+
+If you override `initialize`, you need to call `super` manually to have the
+attributes set, even those defined in the subclass.
+
+```ruby
+class FooTimesBar < Foo
+  kwattr :bar
+
+# Ideally you would have this:
+# def initialize
+#   @foo_times_bar = foo * bar
+# end
+
+  def initialize(**)
+    super
+    @foo_times_bar = foo * bar
+  end
+end
+
+FooTimesBar.new(foo: 42, bar: 21) # => #<FooTimesBar @foo=42, @bar=21, @foo_times_bar=882>
+```
+
+That's because the provided `initialize` is defined in `KWAttr::Initializer`,
+and Ruby includes a module only once in the ancestors chain.
+
+```ruby
+FooTimesBar.ancestors # => [FooTimesBar, KWAttr::Initializer, Foo, Object, Kernel, BasicObject]
 ```
 
 ### include
