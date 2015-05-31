@@ -37,8 +37,8 @@ module RaiseArgumentErrorHelper
     end
   end
 
-  def it_raises_on_missing_positional_argument(&block)
-    it 'raises ArgumentError on missing positional parameter' do
+  def it_raises_wrong_number_of_arguments(&block)
+    it 'raises ArgumentError on wrong number of arguments' do
       expect(&block).to raise_error(ArgumentError, a_string_starting_with('wrong number of arguments'))
     end
   end

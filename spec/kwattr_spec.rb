@@ -210,7 +210,7 @@ RSpec.describe KWAttr do
       described_class.new(42, foo: 21, bar: 14, err: 43)
     end
 
-    it_raises_on_missing_positional_argument do
+    it_raises_wrong_number_of_arguments do
       described_class.new(foo: 42, bar: 21)
     end
 
