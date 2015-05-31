@@ -77,8 +77,8 @@ attributes set, even those defined in the subclass.
 class FooTimesBar < Foo
   kwattr :bar
 
-# Ideally you would have this:
-# def initialize
+# def initialize(foo:)
+#   super(foo: foo)
 #   @foo_times_bar = foo * bar
 # end
 
