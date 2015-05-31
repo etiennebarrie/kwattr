@@ -35,6 +35,8 @@ module KWAttr
         instance_variable_set "@#{key}", value
       end
       unless required.empty?
+        super_initialize = method(:initialize).super_method
+        super_initialize.parameters.each { |type, name| required << name if type == :keyreq && !kwargs.key?(name) }
         raise ArgumentError,
           "missing keyword#{'s' if required.size > 1}: #{required.join(', ')}"
       end

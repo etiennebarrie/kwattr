@@ -187,7 +187,7 @@ RSpec.describe KWAttr do
 
   describe OneAttrOneKeyword, 'a class with one kwattr and one keyword parameter' do
     include_examples 'a class with two kwattrs to initialize'
-    include_examples 'incomplete exception for missing keywords'
+    include_examples 'combined errors for two keywords'
   end
 
   describe TwoAttrsInheritsOneAttr, 'a class that inherits one kwattr, defines a new one' do
