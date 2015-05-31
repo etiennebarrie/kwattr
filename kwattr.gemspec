@@ -5,7 +5,7 @@ require 'kwattr/version'
 
 Gem::Specification.new do |spec|
   spec.name          = "kwattr"
-  spec.version       = KWattr::VERSION
+  spec.version       = KWAttr::VERSION
   spec.authors       = ["Étienne Barrié"]
   spec.email         = ["etienne.barrie@gmail.com"]
 

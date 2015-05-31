@@ -1,9 +1,9 @@
 require 'spec_helper'
 require_relative 'examples'
 
-RSpec.describe KWattr do
+RSpec.describe KWAttr do
   it 'has a version number' do
-    expect(KWattr::VERSION).not_to be nil
+    expect(KWAttr::VERSION).not_to be nil
   end
 
   # ZERO
