@@ -161,6 +161,16 @@ RSpec.describe KWattr do
     end
   end
 
+  shared_examples 'incomplete exception for missing keywords' do
+    it_raises_on_missing_keyword :foo do
+      described_class.new
+    end
+
+    it_raises_on_missing_keyword :foo, 'with an options hash' do
+      described_class.new({})
+    end
+  end
+
   describe TwoAttrs, 'a class with two kwattrs' do
     include_examples 'a class with two kwattrs to initialize'
     include_examples 'combined errors for two keywords'
@@ -173,6 +183,7 @@ RSpec.describe KWattr do
 
   describe OneAttrOneKeyword, 'a class with one kwattr and one keyword parameter' do
     include_examples 'a class with two kwattrs to initialize'
+    include_examples 'incomplete exception for missing keywords'
   end
 
   describe TwoAttrsInheritsOneAttr, 'a class that inherits one kwattr, defines a new one' do
