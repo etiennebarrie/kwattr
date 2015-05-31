@@ -13,4 +13,8 @@ task :examples do
   ruby "test.rb"
 end
 
-task :default => [:examples, :spec]
+task :benchmark do
+  ruby "benchmark.rb"
+end
+
+task :default => [:examples, :spec, :benchmark]
