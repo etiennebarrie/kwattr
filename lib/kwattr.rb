@@ -40,11 +40,13 @@ module KWAttr
         raise ArgumentError,
           "missing keyword#{'s' if required.size > 1}: #{required.join(', ')}"
       end
-      if method(:initialize).super_method.arity == args.size && !kwargs.empty?
-        raise ArgumentError,
-          "unknown keyword#{'s' if kwargs.size > 1}: #{kwargs.keys.join(', ')}"
+      unless kwargs.empty?
+        if method(:initialize).super_method.arity == args.size
+          raise ArgumentError,
+            "unknown keyword#{'s' if kwargs.size > 1}: #{kwargs.keys.join(', ')}"
+        end
+        args << kwargs
       end
-      args << kwargs unless kwargs.empty?
       super(*args)
     end
   end
