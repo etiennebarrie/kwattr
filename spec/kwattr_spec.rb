@@ -138,16 +138,18 @@ RSpec.describe KWattr do
       expect(instance.bar).to eq 21
     end
 
-    it_raises_on_unknown_keyword :err do
-      described_class.new(foo: 42, bar: 21, err: 43)
-    end
-
     it_raises_on_missing_keyword :foo do
       described_class.new(bar: 42)
     end
 
     it_raises_on_missing_keyword :bar do
       described_class.new(foo: 42)
+    end
+  end
+
+  shared_examples 'unknown keyword exception' do
+    it_raises_on_unknown_keyword :err do
+      described_class.new(foo: 42, bar: 21, err: 43)
     end
   end
 
@@ -173,11 +175,13 @@ RSpec.describe KWattr do
 
   describe TwoAttrs, 'a class with two kwattrs' do
     include_examples 'a class with two kwattrs to initialize'
+    include_examples 'unknown keyword exception'
     include_examples 'combined errors for two keywords'
   end
 
   describe TwoAttrsOnTwoLines, 'a class with two kwattrs' do
     include_examples 'a class with two kwattrs to initialize'
+    include_examples 'unknown keyword exception'
     include_examples 'combined errors for two keywords'
   end
 
@@ -188,6 +192,7 @@ RSpec.describe KWattr do
 
   describe TwoAttrsInheritsOneAttr, 'a class that inherits one kwattr, defines a new one' do
     include_examples 'a class with two kwattrs to initialize'
+    include_examples 'unknown keyword exception'
     include_examples 'combined errors for two keywords'
   end
 
