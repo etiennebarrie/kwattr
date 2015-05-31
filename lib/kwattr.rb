@@ -1,6 +1,5 @@
-require "kwattr/version"
-
 module KWAttr
+  VERSION = "0.2.0"
 
   def kwattr(*attrs, **opts)
     names = [*attrs, *opts.keys]
