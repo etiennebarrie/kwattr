@@ -1,5 +1,5 @@
 class KWAttr < Module
-  VERSION = "0.2.0"
+  VERSION = "0.3.0"
 
   attr_reader :required_attrs, :defaults
 
