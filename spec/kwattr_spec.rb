@@ -153,22 +153,28 @@ RSpec.describe KWAttr do
     end
   end
 
+  shared_examples 'wrong number of arguments exception' do
+    it_raises_wrong_number_of_arguments do
+      described_class.new(foo: 42, bar: 21, err: 43)
+    end
+  end
+
   shared_examples 'combined errors for two keywords' do
     it_raises_on_missing_keywords :foo, :bar do
       described_class.new
     end
 
-    it_raises_on_missing_keywords :foo, :bar, 'with an options hash' do
+    it_raises_on_missing_keywords :foo, :bar do
       described_class.new({})
     end
   end
 
   shared_examples 'incomplete exception for missing keywords' do
-    it_raises_on_missing_keyword :foo do
+    it_raises_on_missing_keyword :bar do
       described_class.new
     end
 
-    it_raises_on_missing_keyword :foo, 'with an options hash' do
+    it_raises_on_missing_keyword :bar, 'with an options hash' do
       described_class.new({})
     end
   end
@@ -187,13 +193,14 @@ RSpec.describe KWAttr do
 
   describe OneAttrOneKeyword, 'a class with one kwattr and one keyword parameter' do
     include_examples 'a class with two kwattrs to initialize'
+    include_examples 'unknown keyword exception'
     include_examples 'combined errors for two keywords'
   end
 
   describe TwoAttrsInheritsOneAttr, 'a class that inherits one kwattr, defines a new one' do
     include_examples 'a class with two kwattrs to initialize'
-    include_examples 'unknown keyword exception'
-    include_examples 'combined errors for two keywords'
+    include_examples 'wrong number of arguments exception'
+    include_examples 'incomplete exception for missing keywords'
   end
 
   # THREE

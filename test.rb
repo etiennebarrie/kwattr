@@ -47,7 +47,6 @@ fail unless p(test.titi) == 1
 fail unless p(test.toto) == 2
 
 class TestDescendant < Test
-  kwattr :bar
   kwattr :baz
 end
 

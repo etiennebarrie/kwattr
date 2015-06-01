@@ -86,6 +86,10 @@ end
 
 class OneAttrMistakenlyRedefinesIt < OneAttr
   kwattr :foo
+
+  def initialize
+    super(foo: foo)
+  end
 end
 
 module OneAttrModule
@@ -118,8 +122,8 @@ class TwoAttrsInheritsOneAttrUsedInInitialize < OneAttr
   kwattr :bar
   attr_reader :foo_times_bar
 
-  def initialize(**)
-    super
+  def initialize(foo:)
+    super(foo: foo)
     @foo_times_bar = foo * bar
   end
 end
