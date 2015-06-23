@@ -43,6 +43,10 @@ class KWAttr < Module
     end
     $VERBOSE = verbose
   end
+
+  def inspect
+    "<KWAttr:#{'%#016x'%(object_id<<1)} @required=#{@required.inspect}, @defaults=#{@defaults.inspect}>"
+  end
 end
 
 class Module
