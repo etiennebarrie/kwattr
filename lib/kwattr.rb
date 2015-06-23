@@ -11,6 +11,7 @@ class KWAttr < Module
     defaults = @defaults
     required_attrs.concat(attrs).uniq!
     defaults.merge!(opts)
+    iv_cache = Hash.new { |h, k| h[k] = :"@#{k}" }
 
     verbose, $VERBOSE = $VERBOSE, false
     define_method :initialize do |*args, **kwargs|
@@ -19,7 +20,7 @@ class KWAttr < Module
       defaults.merge(kwargs).each_pair do |key, value|
         next unless required.delete(key) || defaults.key?(key)
         kwargs.delete(key)
-        instance_variable_set "@#{key}", value
+        instance_variable_set iv_cache[key], value
       end
 
       unless required.empty?
@@ -29,7 +30,6 @@ class KWAttr < Module
         raise ArgumentError,
           "missing keyword#{'s' if required.size > 1}: #{required.join(', ')}"
       end
-
       unless kwargs.empty?
         arity = method(:initialize).super_method.arity
         if arity != -1 && arity == args.size
