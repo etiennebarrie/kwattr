@@ -14,7 +14,7 @@ class KWAttr < Module
     required_attrs.concat(attrs).uniq!
     defaults.merge!(opts)
 
-    $VERBOSE = false
+    verbose, $VERBOSE = $VERBOSE, false
     define_method :initialize do |*args, **kwargs|
       required = required_attrs.dup
       defaults.merge(kwargs).each_pair do |key, value|
@@ -41,9 +41,8 @@ class KWAttr < Module
 
       super(*args)
     end
-    $VERBOSE = true
+    $VERBOSE = verbose
   end
-
 end
 
 class Module
