@@ -93,8 +93,8 @@ class ROneAttrViaModule
 end
 
 Benchmark.ips do |b|
-  b.warmup = 0.1
-  b.time = 1
+  b.warmup = ENV['CONTINUOUS_INTEGRATION'] ? 1 : 0.1
+  b.time = ENV['CONTINUOUS_INTEGRATION'] ? 5 : 1
 
   b.report "KWAttr classes" do
     OneAttr.new foo: 42
