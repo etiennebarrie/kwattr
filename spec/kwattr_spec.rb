@@ -254,4 +254,14 @@ RSpec.describe KWAttr do
       expect(instance.foo_times_bar).to eq 42 * 21
     end
   end
+
+  # MISC
+
+  it 'has the right line number in backtraces' do
+    expect { OneAttrOnePositional.new foo: 42 }.to raise_error do |exception|
+      lib_backtrace = exception.backtrace.grep Regexp.union '/lib/kwattr.rb:'
+      expect(lib_backtrace.size).to eq 1
+      expect(lib_backtrace.first).to include 'kwattr.rb:42:in '
+    end
+  end
 end
