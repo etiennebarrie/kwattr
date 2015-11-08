@@ -16,17 +16,17 @@ class KWAttr < Module
     verbose, $VERBOSE = $VERBOSE, false
     define_method :initialize do |*args, **kwargs|
       required = required_attrs.dup
-
       defaults.merge(kwargs).each_pair do |key, value|
         next unless required.delete(key) || defaults.key?(key)
         kwargs.delete(key)
         instance_variable_set iv_cache[key], value
       end
-
       unless required.empty?
+        super_required = []
         method(:initialize).super_method.parameters.each do |type, name|
-          required << name if type == :keyreq && !kwargs.key?(name)
+          super_required << name if type == :keyreq && !kwargs.key?(name)
         end
+        required.unshift(*super_required)
         raise ArgumentError,
           "missing keyword#{'s' if required.size > 1}: #{required.join(', ')}"
       end

@@ -18,11 +18,11 @@ class OneAttrDefault
 end
 
 class OneAttrOneKeyword
-  kwattr :foo
-  attr_reader :bar
+  kwattr :bar
+  attr_reader :foo
 
-  def initialize(bar:)
-    @bar = bar
+  def initialize(foo:)
+    @foo = foo
   end
 end
 
