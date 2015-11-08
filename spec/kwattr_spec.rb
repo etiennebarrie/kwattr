@@ -153,6 +153,12 @@ RSpec.describe KWAttr do
     end
   end
 
+  shared_examples 'unknown keyword exception (artificial)' do
+    it_raises_on_unknown_keyword :err, artificial: true do
+      described_class.new(foo: 42, bar: 21, err: 43)
+    end
+  end
+
   shared_examples 'wrong number of arguments exception, non-introspectable super' do
     it_raises_wrong_number_of_arguments do
       described_class.new(foo: 42, bar: 21, err: 43)
@@ -193,13 +199,17 @@ RSpec.describe KWAttr do
 
   describe OneAttrOneKeyword, 'a class with one kwattr and one keyword parameter' do
     include_examples 'a class with two kwattrs to initialize'
-    include_examples 'unknown keyword exception'
-    include_examples 'combined errors for two keywords'
+    include_examples 'unknown keyword exception (artificial)'
+    unless defined?(Rubinius) || RUBY_VERSION < '2.2'
+      include_examples 'combined errors for two keywords'
+    else
+      include_examples 'incomplete exception for missing keywords, non-introspectable super'
+    end
   end
 
   describe OneAttrOneKeywordObscure, 'a class with one kwattr and one non-introspectable keyword parameter' do
     include_examples 'a class with two kwattrs to initialize'
-    include_examples 'unknown keyword exception'
+    include_examples 'unknown keyword exception (artificial)'
     include_examples 'incomplete exception for missing keywords, non-introspectable super'
   end
 

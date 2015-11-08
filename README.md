@@ -54,6 +54,42 @@ FooProtected.new # => #<FooProtected @foo=42>
 FooProtected.protected_instance_methods # => [:foo]
 ```
 
+### useful exception messages
+
+When it can, kwattr tries to extract the required keyword arguments from the
+super method to show more useful exception messages.
+
+```ruby
+class FooBar2
+  kwattr :foo
+
+  def initialize(bar:)
+  end
+end
+FooBar2.new
+# Ruby 2.2 and later:    ArgumentError: missing keywords: bar, foo
+# Ruby 2.1 and Rubinius: ArgumentError: missing keyword: foo
+```
+
+## compatibility
+
+* **Ruby 2.2** is fully supported.
+
+* **Ruby 2.1** is supported, but exceptions don't include the keyword from the
+  super method.
+
+* **Ruby 2.0**: kwattr brings fake required keyword arguments to Ruby 2.0: it
+  gives you the feel of required keyword arguments without needing the syntax
+  that came in 2.1.
+
+* **Rubinius** is supported, starting at least version 2.5.8, possibly before.
+  A similar but not exactly the same limitation as 2.1 applies to exceptions.
+
+## free features
+
+*kwattr has no specific code to support those, but they work and are supported
+use cases.*
+
 ### subclass
 
 ```ruby

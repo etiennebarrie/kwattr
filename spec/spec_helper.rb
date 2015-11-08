@@ -14,9 +14,16 @@ RSpec.configure do |config|
 end
 
 module RaiseArgumentErrorHelper
-  def it_raises_on_unknown_keyword(keyword, &block)
+  def it_raises_on_unknown_keyword(keyword, artificial: false, &block)
     it 'raises ArgumentError on unknown keyword' do
-      expect(&block).to raise_error(ArgumentError, "unknown keyword: #{keyword}")
+      message = if defined?(Rubinius) && !artificial
+        a_string_starting_with("method 'initialize':")
+      elsif RUBY_ENGINE == 'ruby' && RUBY_VERSION < '2.2' && !artificial
+        a_string_starting_with('wrong number of arguments')
+      else
+        "unknown keyword: #{keyword}"
+      end
+      expect(&block).to raise_error(ArgumentError, message)
     end
   end
 
@@ -39,7 +46,12 @@ module RaiseArgumentErrorHelper
 
   def it_raises_wrong_number_of_arguments(&block)
     it 'raises ArgumentError on wrong number of arguments' do
-      expect(&block).to raise_error(ArgumentError, a_string_starting_with('wrong number of arguments'))
+      message_start = if defined?(Rubinius)
+        "method 'initialize':"
+      else
+        'wrong number of arguments'
+      end
+      expect(&block).to raise_error(ArgumentError, a_string_starting_with(message_start))
     end
   end
 end
