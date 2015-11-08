@@ -153,7 +153,7 @@ RSpec.describe KWAttr do
     end
   end
 
-  shared_examples 'wrong number of arguments exception' do
+  shared_examples 'wrong number of arguments exception, non-introspectable super' do
     it_raises_wrong_number_of_arguments do
       described_class.new(foo: 42, bar: 21, err: 43)
     end
@@ -169,7 +169,7 @@ RSpec.describe KWAttr do
     end
   end
 
-  shared_examples 'incomplete exception for missing keywords' do
+  shared_examples 'incomplete exception for missing keywords, non-introspectable super' do
     it_raises_on_missing_keyword :bar do
       described_class.new
     end
@@ -197,10 +197,16 @@ RSpec.describe KWAttr do
     include_examples 'combined errors for two keywords'
   end
 
+  describe OneAttrOneKeywordObscure, 'a class with one kwattr and one non-introspectable keyword parameter' do
+    include_examples 'a class with two kwattrs to initialize'
+    include_examples 'unknown keyword exception'
+    include_examples 'incomplete exception for missing keywords, non-introspectable super'
+  end
+
   describe TwoAttrsInheritsOneAttr, 'a class that inherits one kwattr, defines a new one' do
     include_examples 'a class with two kwattrs to initialize'
-    include_examples 'wrong number of arguments exception'
-    include_examples 'incomplete exception for missing keywords'
+    include_examples 'wrong number of arguments exception, non-introspectable super'
+    include_examples 'incomplete exception for missing keywords, non-introspectable super'
   end
 
   # THREE
@@ -229,10 +235,16 @@ RSpec.describe KWAttr do
       described_class.new(baz: 42)
     end
 
-    it_raises_on_missing_keywords :foo, :bar, 'without an options hash' do
-      described_class.new
+    it_raises_on_missing_keywords :foo, :bar do
+      described_class.new(42)
+    end
+
+    it_raises_on_missing_keywords :foo, :bar, 'with an options hash' do
+      described_class.new(42, {})
     end
   end
+
+  # USED IN INITIALIZE
 
   describe OneAttrUsedInInitialize, 'a class with one kwattr used in initialize' do
     example '#initialize is called with attributes initialized' do
@@ -260,8 +272,7 @@ RSpec.describe KWAttr do
   it 'has the right line number in backtraces' do
     expect { OneAttrOnePositional.new foo: 42 }.to raise_error do |exception|
       lib_backtrace = exception.backtrace.grep Regexp.union '/lib/kwattr.rb:'
-      expect(lib_backtrace.size).to eq 1
-      expect(lib_backtrace.first).to include 'kwattr.rb:42:in '
+      expect(lib_backtrace).to contain_exactly a_string_matching('kwattr.rb:42:in ')
     end
   end
 end

@@ -26,6 +26,19 @@ class OneAttrOneKeyword
   end
 end
 
+class OneAttrOneKeywordObscure
+  kwattr :bar
+  attr_reader :foo
+
+  # respects exceptions, but can't be introspected because of *args
+  def initialize(*args)
+    kwargs = args.last or raise ArgumentError, "missing keyword: foo"
+    @foo = kwargs.delete(:foo) { raise ArgumentError, "missing keyword: foo" }
+    raise ArgumentError, "unknown keyword: #{kwargs.keys.first}" if kwargs.one?
+    raise ArgumentError, "unknown keywords: #{kwargs.keys.join(',')}" unless kwargs.empty?
+  end
+end
+
 class OneAttrOnePositional
   kwattr :foo
   attr_reader :bar
