@@ -73,7 +73,7 @@ FooBar2.new
 
 ## compatibility
 
-* **Ruby 2.2** is fully supported.
+* **Ruby 2.2** and **JRuby 9000** are fully supported.
 
 * **Ruby 2.1** is supported, but exceptions don't include the keyword from the
   super method.
