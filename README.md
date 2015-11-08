@@ -75,8 +75,7 @@ FooBar2.new
 
 * **Ruby 2.2** and **JRuby 9000** are fully supported.
 
-* **Ruby 2.1** is supported, but exceptions don't include the keyword from the
-  super method.
+* **Ruby 2.1** is supported, but exceptions don't include keywords from `super`.
 
 * **Ruby 2.0**: kwattr brings fake required keyword arguments to Ruby 2.0: it
   gives you the feel of required keyword arguments without needing the syntax
