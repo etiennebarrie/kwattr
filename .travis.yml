@@ -2,8 +2,11 @@ language: ruby
 before_install:
   - gem install bundler
 rvm:
-  - 2.1.8
-  - 2.2.4
-  - 2.3.0
-  - rbx-2
-  - jruby-9.0.4.0
+  - 2.1.10
+  - 2.2.5
+  - 2.3.1
+  - rbx-3
+  - jruby-9.1.5.0
+matrix:
+  allow_failures:
+  - rvm: rbx-3
