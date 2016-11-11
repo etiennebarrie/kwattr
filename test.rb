@@ -1,4 +1,10 @@
 require 'kwattr'
+puts "kwattr v#{KWAttr::VERSION}"
+
+def p(value)
+  super if $DEBUG
+  value
+end
 
 class Test
   kwattr :foo, :bar
