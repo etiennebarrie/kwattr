@@ -279,8 +279,8 @@ RSpec.describe KWAttr do
 
   # MISC
 
-  it 'has the right line number in backtraces' do
-    expect { OneAttrOnePositional.new foo: 42 }.to raise_error do |exception|
+  it 'has just the right line number in backtraces' do
+    expect { OneAttrOneKeywordObscure.new bar: 42 }.to raise_error do |exception|
       lib_backtrace = exception.backtrace.grep Regexp.union '/lib/kwattr.rb:'
       expect(lib_backtrace).to contain_exactly a_string_matching('kwattr.rb:42:in ')
     end
