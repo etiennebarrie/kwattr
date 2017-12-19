@@ -16,9 +16,7 @@ end
 module RaiseArgumentErrorHelper
   def it_raises_on_unknown_keyword(keyword, artificial: false, &block)
     it 'raises ArgumentError on unknown keyword' do
-      message = if defined?(Rubinius) && !artificial
-        a_string_starting_with("method 'initialize':")
-      elsif RUBY_ENGINE == 'ruby' && RUBY_VERSION < '2.2' && !artificial
+      message = if RUBY_ENGINE == 'ruby' && RUBY_VERSION < '2.2' && !artificial
         a_string_starting_with('wrong number of arguments')
       else
         "unknown keyword: #{keyword}"
