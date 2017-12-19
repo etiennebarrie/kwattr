@@ -160,7 +160,7 @@ RSpec.describe KWAttr do
   end
 
   shared_examples 'wrong number of arguments exception, non-introspectable super' do
-    it_raises_wrong_number_of_arguments do
+    it_raises_wrong_number_of_arguments given: 1, expected: 0 do
       described_class.new(foo: 42, bar: 21, err: 43)
     end
   end
@@ -233,7 +233,7 @@ RSpec.describe KWAttr do
       described_class.new(42, foo: 21, bar: 14, err: 43)
     end
 
-    it_raises_wrong_number_of_arguments do
+    it_raises_wrong_number_of_arguments given: 0, expected: 1 do
       described_class.new(foo: 42, bar: 21)
     end
 

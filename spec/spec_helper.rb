@@ -42,14 +42,14 @@ module RaiseArgumentErrorHelper
     end
   end
 
-  def it_raises_wrong_number_of_arguments(&block)
+  def it_raises_wrong_number_of_arguments(given:, expected:, &block)
     it 'raises ArgumentError on wrong number of arguments' do
-      message_start = if defined?(Rubinius)
-        "method 'initialize':"
+      message_match = if RUBY_ENGINE == "jruby" || RUBY_ENGINE == "ruby" && RUBY_VERSION < "2.3"
+        "#{given} for #{expected}"
       else
-        'wrong number of arguments'
+        "given #{given}, expected #{expected}"
       end
-      expect(&block).to raise_error(ArgumentError, a_string_starting_with(message_start))
+      expect(&block).to raise_error(ArgumentError, a_string_matching(message_match))
     end
   end
 end
