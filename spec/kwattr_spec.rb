@@ -104,6 +104,17 @@ RSpec.describe KWAttr do
     end
   end
 
+  describe OneAttrInitializeYield, 'a class that yields in initialize' do
+    include_examples 'a class with one attribute'
+    include_examples 'a class with one kwattr to initialize'
+
+    example 'yields' do
+      instance = described_class.new(foo: 42) { @yielded = true }
+      expect(@yielded).to be true
+    end
+  end
+
+
   describe OneAttrViaModule, 'a class with one kwattr defined via a module' do
     include_examples 'a class with one attribute'
     include_examples 'a class with one kwattr to initialize'

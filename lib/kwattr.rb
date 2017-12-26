@@ -14,7 +14,7 @@ class KWAttr < Module
     iv_cache = Hash.new { |h, k| h[k] = :"@#{k}" }
 
     verbose, $VERBOSE = $VERBOSE, false
-    define_method :initialize do |*args, **kwargs|
+    define_method :initialize do |*args, **kwargs, &block|
       required = required_attrs.dup
 
       defaults.merge(kwargs).each_pair do |key, value|
@@ -39,7 +39,7 @@ class KWAttr < Module
       begin
 
 
-        super(*args)
+        super(*args, &block)
 
       rescue ArgumentError
         arity = method(:initialize).super_method.arity

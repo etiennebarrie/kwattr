@@ -193,9 +193,20 @@ class TestInitDescendant < TestInit
   end
 end
 
-test = TestInit.new(bar: 42)
 test = TestInitDescendant.new(baz: 7)
 fail unless p(test.inits) == [1, 2]
+
+class TestInitBlock
+  kwattr foo: 42
+
+  def initialize
+    yield self
+  end
+end
+
+yielded = nil
+TestInitBlock.new { |object| yielded = object.foo }
+fail unless p(yielded) == 42
 
 module Foo
   kwattr :foo

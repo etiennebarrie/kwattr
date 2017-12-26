@@ -39,6 +39,14 @@ class OneAttrOneKeywordObscure
   end
 end
 
+class OneAttrInitializeYield
+  kwattr :foo
+
+  def initialize
+    yield if block_given?
+  end
+end
+
 class OneAttrOnePositional
   kwattr :foo
   attr_reader :bar

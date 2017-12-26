@@ -36,9 +36,19 @@ class BarInitialize
 
   def initialize(bar: 2)
     @bar = foo / bar
+    yield @bar if block_given?
   end
 end
 BarInitialize.new # => #<BarInitialize @foo=42, @bar=21>
+```
+
+The prepended `initialize` passes on any block it receives, so you can yield
+from your `initialize` as usual.
+
+```ruby
+default_bar = nil
+BarInitialize.new { |bar| default_bar = bar }
+default_bar # => 21
 ```
 
 ### return value
