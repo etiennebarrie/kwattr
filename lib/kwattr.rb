@@ -10,7 +10,6 @@ class KWAttr < Module
     required_attrs = @required
     defaults = @defaults
     required_attrs.concat(attrs).uniq!
-    super_method = Method.instance_methods.include? :super_method
     defaults.merge!(opts)
     iv_cache = Hash.new { |h, k| h[k] = :"@#{k}" }
 
@@ -29,7 +28,7 @@ class KWAttr < Module
         initialize = method(:initialize)
         initialize.super_method.parameters.each do |type, name|
           super_required << name if type == :keyreq && !kwargs.key?(name)
-        end if super_method
+        end
         required.unshift(*super_required)
         raise ArgumentError,
           "missing keyword#{'s' if required.size > 1}: #{required.join(', ')}"
@@ -39,10 +38,11 @@ class KWAttr < Module
 
       begin
 
+
         super(*args)
 
       rescue ArgumentError
-        arity = super_method ? method(:initialize).super_method.arity : -1
+        arity = method(:initialize).super_method.arity
         if !kwargs.empty? && arity != -1 && arity == args.size - 1
           raise ArgumentError,
             "unknown keyword#{'s' if kwargs.size > 1}: #{kwargs.keys.join(', ')}"

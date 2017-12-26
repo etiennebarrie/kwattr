@@ -67,22 +67,17 @@ class FooBar2
   end
 end
 FooBar2.new
-# Ruby 2.2 and later:    ArgumentError: missing keywords: bar, foo
-# Ruby 2.1 and Rubinius: ArgumentError: missing keyword: foo
+# Ruby 2.2 and later: ArgumentError: missing keywords: bar, foo
+# Rubinius:           ArgumentError: missing keyword: foo
 ```
 
 ## compatibility
 
-* **Ruby 2.3**, **Ruby 2.2** and **JRuby 9000** are fully supported.
+* **Ruby 2.5**, **Ruby 2.4**,**Ruby 2.3**, **Ruby 2.2** and **JRuby 9000** are
+  fully supported.
 
-* **Ruby 2.1** is supported, but exceptions don't include keywords from `super`.
-
-* **Ruby 2.0**: kwattr brings fake required keyword arguments to Ruby 2.0: it
-  gives you the feel of required keyword arguments without needing the syntax
-  that came in 2.1.
-
-* **Rubinius** is supported, starting at least version 2.5.8, possibly before.
-  A similar but not exactly the same limitation as 2.1 applies to exceptions.
+* **Rubinius** is supported, but exceptions don't include keywords from
+  `super`.
 
 ## free features
 
