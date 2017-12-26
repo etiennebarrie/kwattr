@@ -5,4 +5,4 @@ require "kwattr"
 require_relative "../spec/examples"
 
 require "irb"
-IRB.start
+IRB.start(__FILE__)
