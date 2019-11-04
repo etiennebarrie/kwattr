@@ -4,8 +4,8 @@ rvm:
   - "2.3"
   - "2.4"
   - "2.5"
-  - rbx-3
+  - rbx-4
   - jruby-9.1.9.0
 matrix:
   allow_failures:
-  - rvm: rbx-3
+  - rvm: rbx-4
