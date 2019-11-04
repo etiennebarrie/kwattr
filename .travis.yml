@@ -1,13 +1,13 @@
 language: ruby
-before_install:
-  - gem install bundler
 rvm:
   - "2.2"
   - "2.3"
   - "2.4"
   - "2.5"
-  - rbx-3
+  - "2.6"
+  - rbx-4
   - jruby-9.1.9.0
+  - truffleruby
 matrix:
   allow_failures:
-  - rvm: rbx-3
+  - rvm: rbx-4
