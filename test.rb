@@ -1,5 +1,6 @@
 require 'kwattr'
 puts "kwattr v#{KWAttr::VERSION}"
+puts "ruby v#{RUBY_VERSION}"
 
 def p(value)
   super if $DEBUG
