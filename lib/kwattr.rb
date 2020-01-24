@@ -31,7 +31,7 @@ class KWAttr < Module
         end
         required.unshift(*super_required)
         raise ArgumentError,
-          "missing keyword#{'s' if required.size > 1}: #{required.join(', ')}"
+          "missing keyword#{'s' if required.size > 1}: #{KWAttr.keywords_for_error(required).join(', ')}"
       end
 
       args << kwargs unless kwargs.empty?
@@ -45,7 +45,7 @@ class KWAttr < Module
         arity = method(:initialize).super_method.arity
         if !kwargs.empty? && arity != -1 && arity == args.size - 1
           raise ArgumentError,
-            "unknown keyword#{'s' if kwargs.size > 1}: #{kwargs.keys.join(', ')}"
+            "unknown keyword#{'s' if kwargs.size > 1}: #{KWAttr.keywords_for_error(kwargs.keys).join(', ')}"
         end
         raise
       end
@@ -55,6 +55,18 @@ class KWAttr < Module
 
   def inspect
     "<KWAttr:#{'%#016x'%(object_id<<1)} @required=#{@required.inspect}, @defaults=#{@defaults.inspect}>"
+  end
+end
+
+class << KWAttr
+  if RUBY_ENGINE = 'ruby' && RUBY_VERSION >= '2.7'
+    def keywords_for_error(keywords)
+      keywords.map(&:inspect)
+    end
+  else
+    def keywords_for_error(keywords)
+      keywords
+    end
   end
 end
 

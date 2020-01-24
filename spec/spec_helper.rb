@@ -18,6 +18,8 @@ module RaiseArgumentErrorHelper
     it 'raises ArgumentError on unknown keyword' do
       message = if RUBY_ENGINE == 'ruby' && RUBY_VERSION < '2.2' && !artificial
         a_string_starting_with('wrong number of arguments')
+      elsif RUBY_ENGINE == 'ruby' && RUBY_VERSION >= '2.7'
+        "unknown keyword: :#{keyword}"
       else
         "unknown keyword: #{keyword}"
       end
@@ -29,7 +31,12 @@ module RaiseArgumentErrorHelper
     description = 'raises ArgumentError on missing keyword'
     description << " #{message}" if message
     example description do
-      expect(&block).to raise_error(ArgumentError, "missing keyword: #{keyword}")
+      message = if RUBY_ENGINE == 'ruby' && RUBY_VERSION >= '2.7'
+        "missing keyword: :#{keyword}"
+      else
+        "missing keyword: #{keyword}"
+      end
+      expect(&block).to raise_error(ArgumentError, message)
     end
   end
 
@@ -38,7 +45,12 @@ module RaiseArgumentErrorHelper
     description = 'raises ArgumentError on missing keywords'
     description << " #{message}" if message
     example description, metadata do
-      expect(&block).to raise_error(ArgumentError, "missing keywords: #{keywords.join(', ')}")
+      message = if RUBY_ENGINE == 'ruby' && RUBY_VERSION >= '2.7'
+        "missing keywords: #{keywords.map(&:inspect).join(', ')}"
+      else
+        "missing keywords: #{keywords.join(', ')}"
+      end
+      expect(&block).to raise_error(ArgumentError, message)
     end
   end
 

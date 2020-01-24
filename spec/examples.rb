@@ -32,10 +32,10 @@ class OneAttrOneKeywordObscure
 
   # respects exceptions, but can't be introspected because of *args
   def initialize(*args)
-    kwargs = args.last or raise ArgumentError, "missing keyword: foo"
-    @foo = kwargs.delete(:foo) { raise ArgumentError, "missing keyword: foo" }
-    raise ArgumentError, "unknown keyword: #{kwargs.keys.first}" if kwargs.one?
-    raise ArgumentError, "unknown keywords: #{kwargs.keys.join(',')}" unless kwargs.empty?
+    kwargs = args.last or raise ArgumentError, "missing keyword: #{KWAttr.keywords_for_error([:foo]).first}"
+    @foo = kwargs.delete(:foo) { raise ArgumentError, "missing keyword: #{KWAttr.keywords_for_error([:foo]).first}" }
+    raise ArgumentError, "unknown keyword: #{KWAttr.keywords_for_error(kwargs.keys).first}" if kwargs.one?
+    raise ArgumentError, "unknown keywords: #{KWAttr.keywords_for_error(kwargs.keys)}" unless kwargs.empty?
   end
 end
 
