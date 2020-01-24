@@ -2,6 +2,8 @@ class OneAttr
   kwattr :foo
 end
 
+verbose, $VERBOSE = $VERBOSE, false
+
 class OneAttrTwice
   kwattr :foo, :foo
 end
@@ -10,6 +12,8 @@ class OneAttrTwiceTwoLines
   kwattr :foo
   kwattr :foo
 end
+
+$VERBOSE = verbose
 
 class OneAttrDefault
   DEFAULT_FOO = 42
@@ -90,7 +94,7 @@ end
 class ProtectedAttrs
   DEFAULT_BAR = 21
 
-  protected *kwattr(:foo, bar: DEFAULT_BAR)
+  protected(*kwattr(:foo, bar: DEFAULT_BAR))
 
   def pfoo
     foo

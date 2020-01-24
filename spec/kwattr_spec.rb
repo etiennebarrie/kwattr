@@ -109,7 +109,7 @@ RSpec.describe KWAttr do
     include_examples 'a class with one kwattr to initialize'
 
     example 'yields' do
-      instance = described_class.new(foo: 42) { @yielded = true }
+      described_class.new(foo: 42) { @yielded = true }
       expect(@yielded).to be true
     end
   end
