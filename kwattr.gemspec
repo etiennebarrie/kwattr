@@ -12,6 +12,7 @@ Gem::Specification.new do |spec|
   spec.summary       = %q{attr_reader + initialize with keyword arguments}
   spec.description   = %q{}
   spec.homepage      = "https://github.com/etiennebarrie/kwattr"
+  spec.license       = "MIT"
 
   spec.files         = %w[lib/kwattr.rb README.md LICENSE.txt]
   spec.require_paths = ["lib"]
