@@ -137,7 +137,7 @@ end
 class OneAttrInheritsUseInInitialize < OneAttr
   attr_reader :half_foo
 
-  def initialize(*)
+  def initialize(*, **)
     super
     @half_foo = foo / 2
   end
@@ -147,7 +147,7 @@ class TwoAttrsInheritsOneAttrUsedInInitialize < OneAttr
   kwattr :bar
   attr_reader :foo_times_bar
 
-  def initialize(*)
+  def initialize(*, **)
     super
     @foo_times_bar = foo * bar
   end

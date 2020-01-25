@@ -14,7 +14,7 @@ RSpec.describe KWAttr do
     end
 
     it 'can be initialized with an options hash' do
-      described_class.new({})
+      described_class.new(**{})
     end
 
     it_raises_on_unknown_keyword :err do
@@ -60,7 +60,7 @@ RSpec.describe KWAttr do
     end
 
     it_raises_on_missing_keyword :foo, 'with an options hash' do
-      described_class.new({})
+      described_class.new(**{})
     end
   end
 
@@ -136,7 +136,7 @@ RSpec.describe KWAttr do
     end
 
     it_raises_on_missing_keyword :foo, 'with an options hash' do
-      described_class.new(21, {})
+      described_class.new(21, **{})
     end
   end
 
@@ -182,7 +182,7 @@ RSpec.describe KWAttr do
     end
 
     it_raises_on_missing_keywords :foo, :bar do
-      described_class.new({})
+      described_class.new(**{})
     end
   end
 
@@ -192,7 +192,7 @@ RSpec.describe KWAttr do
     end
 
     it_raises_on_missing_keyword :bar, 'with an options hash' do
-      described_class.new({})
+      described_class.new(**{})
     end
   end
 
@@ -261,7 +261,7 @@ RSpec.describe KWAttr do
     end
 
     it_raises_on_missing_keywords :foo, :bar, 'with an options hash' do
-      described_class.new(42, {})
+      described_class.new(42, **{})
     end
   end
 
