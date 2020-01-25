@@ -34,16 +34,17 @@ class KWAttr < Module
           "missing keyword#{'s' if required.size > 1}: #{KWAttr.keywords_for_error(required).join(', ')}"
       end
 
-      args << kwargs unless kwargs.empty?
 
       begin
 
 
-        super(*args, &block)
+        if kwargs.empty?
+          super(*args, &block) else super(*args, **kwargs, &block)
+        end
 
       rescue ArgumentError
         arity = method(:initialize).super_method.arity
-        if !kwargs.empty? && arity != -1 && arity == args.size - 1
+        if !kwargs.empty? && arity != -1 && arity == args.size
           raise ArgumentError,
             "unknown keyword#{'s' if kwargs.size > 1}: #{KWAttr.keywords_for_error(kwargs.keys).join(', ')}"
         end
