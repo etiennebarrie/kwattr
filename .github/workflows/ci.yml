@@ -1,0 +1,21 @@
+name: CI
+on: push
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    name: Ruby ${{ matrix.ruby }}
+    strategy:
+      matrix:
+        ruby: ["2.5", "2.6", "2.7", "3.0", jruby, truffleruby]
+      fail-fast: false
+    continue-on-error: ${{ matrix.ruby == 'jruby' || matrix.ruby == 'truffleruby' }}
+    steps:
+    - name: Check out code
+      uses: actions/checkout@v2
+    - name: Set up Ruby ${{ matrix.ruby }}
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: ${{ matrix.ruby }}
+        bundler-cache: true
+    - name: Run tests
+      run: bin/rake
