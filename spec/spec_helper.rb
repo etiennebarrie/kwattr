@@ -14,11 +14,9 @@ RSpec.configure do |config|
 end
 
 module RaiseArgumentErrorHelper
-  def it_raises_on_unknown_keyword(keyword, artificial: false, &block)
+  def it_raises_on_unknown_keyword(keyword, &block)
     it 'raises ArgumentError on unknown keyword' do
-      message = if RUBY_ENGINE == 'ruby' && RUBY_VERSION < '2.2' && !artificial
-        a_string_starting_with('wrong number of arguments')
-      elsif RUBY_ENGINE == 'ruby' && RUBY_VERSION >= '2.7'
+      message = if RUBY_ENGINE == 'ruby' && RUBY_VERSION >= '2.7'
         "unknown keyword: :#{keyword}"
       else
         "unknown keyword: #{keyword}"
