@@ -16,7 +16,7 @@ end
 module RaiseArgumentErrorHelper
   def it_raises_on_unknown_keyword(keyword, &block)
     it 'raises ArgumentError on unknown keyword' do
-      message = if RUBY_ENGINE == 'ruby' && RUBY_VERSION >= '2.7'
+      message = if RUBY_VERSION >= '2.7'
         "unknown keyword: :#{keyword}"
       else
         "unknown keyword: #{keyword}"
@@ -29,7 +29,7 @@ module RaiseArgumentErrorHelper
     description = 'raises ArgumentError on missing keyword'
     description << " #{message}" if message
     example description do
-      message = if RUBY_ENGINE == 'ruby' && RUBY_VERSION >= '2.7'
+      message = if RUBY_VERSION >= '2.7'
         "missing keyword: :#{keyword}"
       else
         "missing keyword: #{keyword}"
@@ -54,11 +54,7 @@ module RaiseArgumentErrorHelper
 
   def it_raises_wrong_number_of_arguments(given:, expected:, &block)
     it 'raises ArgumentError on wrong number of arguments' do
-      message_match = if RUBY_ENGINE == "jruby" || RUBY_ENGINE == "ruby" && RUBY_VERSION < "2.3"
-        "#{given} for #{expected}"
-      else
-        "given #{given}, expected #{expected}"
-      end
+      message_match = "given #{given}, expected #{expected}"
       expect(&block).to raise_error(ArgumentError, a_string_matching(message_match))
     end
   end
